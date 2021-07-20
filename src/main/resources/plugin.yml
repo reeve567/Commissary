@@ -1,0 +1,12 @@
+main: dev.reeve.commissary.Main
+name: Commissary
+version: 1.0
+depend:
+  - PlaceholderAPI
+
+commands:
+  commissary:
+  commissaryset:
+    permission: commissary.set
+  tickets:
+    permission: commissary.tickets
