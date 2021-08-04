@@ -24,6 +24,11 @@ public class CommissaryManager {
 	}
 	
 	public void addPlayer(int commissary, UUID player) {
+		if (commissary != 1 && commissary != 2 && commissary != 3) {
+			System.err.println("Wrong commissary number, " + commissary);
+			return;
+		}
+		
 		players.get(commissary).put(player, 120);
 		
 		new ActionBar(ChatColor.translateAlternateColorCodes('&', "&aC" + commissary + " timer: &c" + 120 + "&as")).sendToPlayer(Bukkit.getPlayer(player));
@@ -31,15 +36,19 @@ public class CommissaryManager {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				int value = players.get(commissary).get(player);
-				players.get(commissary).put(player, Math.max(value - 1, 0));
-				value = players.get(commissary).get(player);
-				
-				new ActionBar(ChatColor.translateAlternateColorCodes('&', "&aC" + commissary + " timer: &c" + value + "&as")).sendToPlayer(Bukkit.getPlayer(player));
-				
-				if (value == 0) {
-					players.get(commissary).remove(player);
-					Bukkit.getPlayer(player).teleport(saveData.get(commissary).exitLocation);
+				if (players.get(commissary).containsKey(player)) {
+					int value = players.get(commissary).get(player);
+					players.get(commissary).put(player, Math.max(value - 1, 0));
+					value = players.get(commissary).get(player);
+					
+					new ActionBar(ChatColor.translateAlternateColorCodes('&', "&aC" + commissary + " timer: &c" + value + "&as")).sendToPlayer(Bukkit.getPlayer(player));
+					
+					if (value == 0) {
+						players.get(commissary).remove(player);
+						Bukkit.getPlayer(player).teleport(saveData.get(commissary).exitLocation);
+						this.cancel();
+					}
+				} else {
 					this.cancel();
 				}
 			}

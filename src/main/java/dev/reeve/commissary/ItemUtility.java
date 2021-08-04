@@ -37,7 +37,7 @@ public class ItemUtility {
 		
 		meta.setDisplayName(translate("&5C" + commissary + " Shop"));
 		ArrayList<String> lore = new ArrayList<>();
-		lore.add(translate("&2Temporary access to C3 shop."));
+		lore.add(translate("&2Temporary access to C" + commissary + " shop."));
 		lore.add(translate("&4Costs " + saveData.get(commissary).entrancePrice + " tickets."));
 		
 		meta.setLore(lore);
